@@ -8,15 +8,15 @@ mongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
 
   const db = client.db('TodoApp');
 //New collection 'Todos'
-  db.collection('Todos').insertOne({
-    text: "Somethingelse to do",
-    completed: "True"
-  }, (err, res) => {
-    if(err){
-      return  console.log('Unable to insert Todo', err);
-    }
-    console.log(`${JSON.stringify(res.ops, undefined, 2)} Successfull created Todo`);
-  })
+  // db.collection('Todos').insertOne({
+  //   text: "Invite Shetty for lunch",
+  //   completed: "True"
+  // }, (err, res) => {
+  //   if(err){
+  //     return  console.log('Unable to insert Todo', err);
+  //   }
+  //   console.log(`${JSON.stringify(res.ops, undefined, 2)} Successfull created Todo`);
+  // })
 //New collection 'Users'
   db.collection('Users').insertOne({
       name: "Varun",
