@@ -27,6 +27,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
   }, (err) =>{
     console.log('cannot delete the document');
   });
-  //client.close();
+
+  client.close();
 
 });
