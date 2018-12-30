@@ -13,10 +13,6 @@ app.listen(3000, () => {
   console.log("Started on port 3000");
 });
 
-app.get('/',(req, res) => {
-  res.send("hello");
-});
-
 app.post('/todos', (req, res) => {
     var newTodo = new Todo({
     text:req.body.text
@@ -26,11 +22,10 @@ app.post('/todos', (req, res) => {
     }, (err) =>{
       res.status(400).send(`Cannot create the document ${err}`);
     });
-
 });
 
 app.get('/todos', (req, res) => {
-  Todo.find().then((todos)=>{res.send(todos);}, (err)=>{res.send(err);});
+  Todo.find().then((todos)=>{res.send({todos});}, (err)=>{res.status(400).send(err);});
 });
 
 module.exports.app ={app}
