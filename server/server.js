@@ -1,3 +1,13 @@
+var env = process.env.NODE_ENV || 'development'
+
+if(env === 'development'){
+  process.env.port = 3000;
+  process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp'
+} else if(env === 'test'){
+  process.env.port = 3000;
+  process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest'
+}
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var {ObjectID} = require('mongodb');
@@ -7,7 +17,7 @@ var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./model/Todo');
 var {User} = require('./model/User');
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT;
 
 var app = express();
 
@@ -75,6 +85,20 @@ app.patch('/todos/:id', (req, res) => {
     res.send({todo})}).catch((err) => {
       res.status(404).send(err)
     });
+
+});
+
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password'])
+  var newUser = new User(body);
+
+  newUser.save().then((newUser) => {
+    return newUser.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).send(newUser);
+  }).catch((err) =>{
+      res.status(400).send(`Cannot create the document ${err}`);
+  });
 
 });
 
