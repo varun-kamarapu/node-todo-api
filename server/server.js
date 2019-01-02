@@ -16,6 +16,7 @@ var _ = require('lodash');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./model/Todo');
 var {User} = require('./model/User');
+var {authenticate} = require('./middleware/authenticate');
 
 var port = process.env.PORT;
 
@@ -100,6 +101,10 @@ app.post('/users', (req, res) => {
       res.status(400).send(`Cannot create the document ${err}`);
   });
 
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 module.exports.app ={app}
