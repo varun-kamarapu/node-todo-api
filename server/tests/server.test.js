@@ -265,3 +265,42 @@ describe('POST /users', () => {
   });
 
 });
+
+describe('POST /users/login', () => {
+  it('Should login user and return auth token', (done) => {
+    var body = {
+      email: 'varun.kamarapu@gmail.com',
+      password: 'userOnePass'
+    }
+    request(app)
+      .post('/users/login')
+      .send(body)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.email).toBe(body.email)
+        expect(res.headers['x-auth']).toExist()
+      })
+      .end(done)
+
+  });
+
+  it('Should return invaild login', (done) => {
+    var body = {
+      email: 'varun.kamarapu1@gmail.com',
+      password: 'userOnePass'
+    }
+
+    request(app)
+      .post('/users/login')
+      .send(body)
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.email).toBe(undefined)
+        expect(res.headers['x-auth']).toNotExist()
+      })
+      .end(done)
+
+
+
+  });
+});

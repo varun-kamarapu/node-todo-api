@@ -24,7 +24,7 @@ const todos = [{
       access: 'auth',
       token: jwt.sign({_id: userOneId, access: 'auth'}, 'abc123').toString()
     }]
-  }, 
+  },
   {
     _id: userTwoId,
     email: 'saikadevarakonda@gmail.com',
