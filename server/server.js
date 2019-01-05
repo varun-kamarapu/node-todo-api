@@ -5,7 +5,7 @@ if(env === 'development'){
   process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp'
 } else if(env === 'test'){
   process.env.port = 3000;
-  process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest'
+  process.env.MONGODB_URI = 'mongodb://127.0.0.1:27017/TodoAppTest'
 }
 
 var express = require('express');
@@ -92,7 +92,7 @@ app.patch('/todos/:id', (req, res) => {
 app.post('/users', (req, res) => {
   var body = _.pick(req.body, ['email', 'password'])
   var newUser = new User(body);
-  
+
   newUser.save().then((newUser) => {
     return newUser.generateAuthToken();
   }).then((token) => {
